@@ -1,10 +1,30 @@
-import { useRouter } from "next/router"
+import { getData } from "../../data/api";
 
-export default function Shop(){
-    const router = useRouter();
-    const {id} = router.query;
-    
-    return <div>
-        <p>Welcome to shop number {id}</p>
+export async function getStaticPaths() {
+  return {
+    paths: (await getData("coffeeShops")).map((item) => ({
+      params: { id: item.id.toString() },
+    })),
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  return {
+    props: (await getData("coffeeShops")).find((item) => item.id == params.id),
+  };
+}
+
+export default function Shop(props) {
+  //   const router = useRouter();
+  //   const { id } = router.query;
+
+  console.log(props);
+
+  return (
+    <div>
+      <p>{props.name}</p>
+      <p>Welcome to shop number {props.id}</p>
     </div>
+  );
 }

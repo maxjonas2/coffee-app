@@ -18,7 +18,7 @@
   color: black;
 }
 
-.dialog button {
+.btn-normal {
   padding: 0.4rem 0.8rem;
   background-color: #505050;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -27,6 +27,17 @@
   border: none;
   border-radius: 2px;
   font-weight: bold;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-normal:hover {
+  background-color: #5a5a5a;
+}
+
+.btn-normal:active {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
 }
 
 /* ----- PROGRESS BAR ----- */
@@ -269,7 +280,7 @@ strong {
 html,
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #505050;
+  background-color: #3e3e3e;
   color: #c8c8c8;
 }
 
@@ -278,11 +289,6 @@ body {
           box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-img {
-  display: block;
-  max-width: 100%;
 }
 
 .app-container {
@@ -304,7 +310,7 @@ img {
 
 .card {
   padding: 1rem;
-  background-color: #282828;
+  background-color: #2d2d2d;
   -webkit-box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
           box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -317,10 +323,32 @@ img {
 }
 
 .text-faded {
-  opacity: .5;
-  font-size: .9rem;
+  opacity: 0.5;
+  font-size: 1rem;
   white-space: nowrap;
   overflow: clip;
   text-overflow: ellipsis;
+}
+
+.pop-on-hover {
+  position: relative;
+}
+
+.pop-on-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent;
+  -webkit-box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  border-radius: 6px;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+
+.pop-on-hover:hover::before {
+  opacity: 1;
 }
 /*# sourceMappingURL=globals.css.map */

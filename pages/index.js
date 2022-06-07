@@ -1,18 +1,26 @@
 import { useEffect, useState, useContext } from "react";
 import { getData } from "../data/api";
-import Link from "next/link";
 import { InterfaceContext } from "./_app";
+import { ShopCard, ProgressComponent, ExampleDialog } from "../components";
 
-export default function Home() {
-  const [listData, setListData] = useState([]);
+export async function getStaticProps(context) {
+  return {
+    props: {
+      coffeeShops: await getData("coffeeShops"),
+    },
+  };
+}
+
+export default function Home({ coffeeShops }) {
   const [progressValue, setProgressValue] = useState(0);
 
   const { dialog, setDialog } = useContext(InterfaceContext);
 
   useEffect(() => {
-    getData("coffeeShops").then((data) => {
-      setListData(data);
-    });
+    // getData("coffeeShops").then((data) => {
+    //   setListData(data);
+    // });
+    // This is not necessary because the data has been pre-generated on the server and passed to the component as a prop
   }, []);
 
   function openDialog() {
@@ -28,91 +36,34 @@ export default function Home() {
   }
 
   return (
-    <div className="app-container">
-      <Hero />
-      <div>
-        <button onClick={openDialog}>Open Dialog</button>
+    <div className="app-container flow">
+      <div className="flow">
+        <h1>Hello</h1>
+        <h3>Welcome to Shop Finder</h3>
+        <p>Start browsing below</p>
       </div>
-      {listData.length === 0 ? (
+      <div>
+        <button className="btn-normal" onClick={openDialog}>
+          Open Dialog
+        </button>
+      </div>
+      {coffeeShops.length === 0 ? (
         <p>Loading</p>
       ) : (
-        <div className="shop-grid">
-          <List
-            data={listData}
-            render={(item) => <ShopCard key={item.id} data={item} />}
-          />
-        </div>
+        <>
+          <h3>Toronto Stores</h3>
+          <div className="shop-grid">
+            <List
+              data={coffeeShops}
+              render={(item) => <ShopCard key={item.id} data={item} />}
+            />
+          </div>
+        </>
       )}
     </div>
   );
 }
 
-function ProgressComponent({ setDialog }) {
-  const [value, setValue] = useState(0);
-
-  let timerRef;
-
-  useEffect(() => {
-    if (value >= 100) {
-      setDialog(null);
-      return () => clearTimeout(timerRef);
-    }
-
-    timerRef = setTimeout(() => {
-      setValue((value) => value + 5);
-    }, 1000);
-
-    return () => clearTimeout(timerRef);
-  }, [value]);
-
-  return (
-    <div className="flow">
-      <progress max={100} value={value}></progress>
-      <div>
-        <button onClick={() => setDialog(null)}>Close</button>
-      </div>
-    </div>
-  );
-}
-
-function ExampleDialog() {
-  return (
-    <div className="dialog">
-      <h2>Dialog Content</h2>
-      <p>This is some dialog content</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <button onClick={() => setDialog(null)}>Close</button>
-    </div>
-  );
-}
-
-function ShopCard({ data }) {
-  const { id, name, imgUrl, websiteUrl, address, neighborhood } = data;
-
-  return (
-    <Link href={`/shops/${id}`}>
-      <div className="card" role={"link"}>
-        <h3>{name}</h3>
-        <p className="text-faded">
-          <strong>{neighborhood}</strong>
-        </p>
-        <p className="text-faded">{address}</p>
-        <img src={imgUrl} height="220" alt="Image showing coffee" />
-      </div>
-    </Link>
-  );
-}
-
 function List({ data, render }) {
   return data.map((item) => render(item));
-}
-
-function Hero() {
-  return (
-    <div>
-      <h1>Hello</h1>
-      <h3>Welcome to Shop Finder</h3>
-      <p>Start browsing below</p>
-    </div>
-  );
 }
