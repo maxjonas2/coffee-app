@@ -1,17 +1,22 @@
 import { getData } from "../../data/api";
+import { useRouter } from "next/router";
+
+function fetchCoffeeShops() {
+  return getData("coffeeShops").then((data) => data.json());
+}
 
 export async function getStaticPaths() {
   return {
-    paths: (await getData("coffeeShops")).map((item) => ({
+    paths: (await fetchCoffeeShops()).map((item) => ({
       params: { id: item.id.toString() },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 
 export async function getStaticProps({ params }) {
   return {
-    props: (await getData("coffeeShops")).find((item) => item.id == params.id),
+    props: (await fetchCoffeeShops()).find((item) => item.id == params.id),
   };
 }
 
@@ -19,7 +24,11 @@ export default function Shop(props) {
   //   const router = useRouter();
   //   const { id } = router.query;
 
-  console.log(props);
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading</div>;
+  }
 
   return (
     <div>

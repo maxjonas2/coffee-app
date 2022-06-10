@@ -3,8 +3,8 @@
 
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Helvetica, sans-serif;
   background-color: #3e3e3e;
   color: rgb(200, 200, 200);
 }
@@ -22,19 +22,17 @@ body {
 
 .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-auto-flow: row;
   place-content: center;
-  place-items: center start;
   gap: 1rem;
 }
 
 .card {
-  padding: 1rem;
+  padding: 1.4rem;
   background-color: rgb(45, 45, 45);
   box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  width: 220px;
   cursor: pointer;
 }
 
@@ -71,3 +69,42 @@ body {
   }
 }
 
+.image-container {
+  height: 220px;
+  // width: 146px;
+  // overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+
+  img {
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    // transform: translate(8px, -8px);
+  }
+
+  // &::before {
+  //   content: "";
+  //   inset: 0;
+  //   border-radius: 8px;
+  //   position: absolute;
+  //   z-index: 0;
+  //   background-color: rgba(250,120,120, .4);
+  // }
+}
+
+.card-title {
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 1rem;
+}
+
+.shop-card {
+  p {
+    font-weight: 300;
+  }
+}

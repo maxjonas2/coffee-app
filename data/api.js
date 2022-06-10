@@ -1,11 +1,9 @@
-import data from "./coffee-stores";
-
-const urlMap = { coffeeShops: data };
+const urlMap = { coffeeShops: "http://localhost:8000/api/shops" };
 
 export function getData(url) {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(urlMap[url]);
-    }, 0);
+    fetch(urlMap[url], { cache: "default" }).then((data) => {
+      resolve(data);
+    });
   });
 }

@@ -1,5 +1,6 @@
 import "../css/globals.css";
 import { createContext, useState, useEffect, useRef, forwardRef } from "react";
+import BasicHead from "../components/Head";
 
 export const InterfaceContext = createContext();
 
@@ -9,7 +10,6 @@ function App({ Component, pageProps }) {
   function closeDialogHandler(e) {
     if (Object.is(e.target, container.current)) {
       container.current.removeEventListener("click", closeDialog);
-      console.log("event listener removed");
       setDialog(null);
     }
   }
@@ -37,6 +37,7 @@ function App({ Component, pageProps }) {
           closeDialog={closeDialog}
         />
       )}
+      <BasicHead />
       <Component {...pageProps} />
     </InterfaceContext.Provider>
   );

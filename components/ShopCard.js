@@ -5,11 +5,13 @@ export default function ShopCard({ data }) {
 
   return (
     <Link href={`/shops/${id}`}>
-      <div className="card flow pop-on-hover" role={"link"}>
-        <h3>{name}</h3>
-        <p className="text-faded">{neighborhood}</p>
+      <div className="card shop-card flow pop-on-hover" role={"link"}>
+        <h3 className="card-title">{name}</h3>
+        {/* <p className="text-faded">{neighborhood}</p> */}
         <p className="text-faded">{address}</p>
-        <img src={imgUrl} height="220" alt="Image showing coffee" />
+        <div className="image-container">
+          <img src={imgUrl} height="220" alt="Image showing coffee" />
+        </div>
       </div>
     </Link>
   );

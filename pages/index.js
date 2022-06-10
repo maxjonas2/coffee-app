@@ -6,10 +6,14 @@ import { ShopCard, ProgressComponent, ExampleDialog } from "../components";
 export async function getStaticProps(context) {
   return {
     props: {
-      coffeeShops: await getData("coffeeShops"),
+      coffeeShops: await getData("coffeeShops").then((response) =>
+        response.json()
+      ),
     },
   };
 }
+// This can be implemented as a stream (WritableStream Interface). Hence the use of
+// the Response object instead of having the API resolve the actual JSON
 
 export default function Home({ coffeeShops }) {
   const [progressValue, setProgressValue] = useState(0);
@@ -38,8 +42,7 @@ export default function Home({ coffeeShops }) {
   return (
     <div className="app-container flow">
       <div className="flow">
-        <h1>Hello</h1>
-        <h3>Welcome to Shop Finder</h3>
+        <h1>Shop Finder</h1>
         <p>Start browsing below</p>
       </div>
       <div>
