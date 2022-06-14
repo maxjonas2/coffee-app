@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ShopCard({ data }) {
-  const { id, name, imgUrl, websiteUrl, address, neighborhood } = data;
+  const { id, name, imgUrl, address } = data;
 
   return (
     <Link href={`/shops/${id}`}>
@@ -10,7 +11,12 @@ export default function ShopCard({ data }) {
         {/* <p className="text-faded">{neighborhood}</p> */}
         <p className="text-faded">{address}</p>
         <div className="image-container">
-          <img src={imgUrl} height="220" alt="Image showing coffee" />
+          <img
+            src={imgUrl}
+            height="220"
+            alt="Image showing coffee"
+            title="Image showing café"
+          />
         </div>
       </div>
     </Link>

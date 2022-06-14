@@ -5,6 +5,11 @@ function fetchCoffeeShops() {
   return getData("coffeeShops").then((data) => data.json());
 }
 
+/* getStaticPaths Function Schame
+ * return {paths: [{params: {...params}}], fallback: true | false}
+ * params: {id: 1, name: 'whatever', etc}
+ */
+
 export async function getStaticPaths() {
   return {
     paths: (await fetchCoffeeShops()).map((item) => ({
@@ -14,10 +19,17 @@ export async function getStaticPaths() {
   };
 }
 
+// export async function getStaticProps({ params }) {
+//   return {
+//     props: (await fetchCoffeeShops()).find((item) => item.id == params.id),
+//   };
+// }
+
 export async function getStaticProps({ params }) {
-  return {
-    props: (await fetchCoffeeShops()).find((item) => item.id == params.id),
-  };
+  const props = await fetch("http://localhost:8000/api/shops/" + params.id, {
+    method: "get",
+  }).then((response) => response.json());
+  return { props };
 }
 
 export default function Shop(props) {

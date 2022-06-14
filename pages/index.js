@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, Suspense } from "react";
 import { getData } from "../data/api";
 import { InterfaceContext } from "./_app";
 import { ShopCard, ProgressComponent, ExampleDialog } from "../components";
@@ -15,8 +15,18 @@ export async function getStaticProps(context) {
 // This can be implemented as a stream (WritableStream Interface). Hence the use of
 // the Response object instead of having the API resolve the actual JSON
 
-export default function Home({ coffeeShops }) {
+function parseFetchResults(data) {
+  return data.map((item) => ({
+    id: item.fsq_id,
+    name: item.name,
+    address: item.location.address,
+    imgUrl: "/assets/cafe_image.jpg",
+  }));
+}
+
+export default function Home() {
   const [progressValue, setProgressValue] = useState(0);
+  const [coffeeShops, setCoffeShops] = useState([]);
 
   const { dialog, setDialog } = useContext(InterfaceContext);
 
@@ -25,7 +35,29 @@ export default function Home({ coffeeShops }) {
     //   setListData(data);
     // });
     // This is not necessary because the data has been pre-generated on the server and passed to the component as a prop
+
+    navigator.geolocation.getCurrentPosition(positionSuccesss, positionError);
   }, []);
+
+  function positionSuccesss({ coords }) {
+    fetch(
+      `https://api.foursquare.com/v3/places/search?query=coffee&ll=${coords.latitude},${coords.longitude}&radius=30000`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: "fsq3BSwgkrfBE9GJ+5DS0TmmTIKquB0TYjPYPlVIo/u9/yk=",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => setCoffeShops(parseFetchResults(data.results)))
+      .catch((error) => console.log(error));
+  }
+
+  function positionError(error) {
+    console.log(error);
+  }
 
   function openDialog() {
     setDialog(
@@ -51,7 +83,9 @@ export default function Home({ coffeeShops }) {
         </button>
       </div>
       {coffeeShops.length === 0 ? (
-        <p>Loading</p>
+        <>
+          <List data={[1, 2, 3, 4, 5, 6]} render={item => <ShopCard placeholder={true}/>}
+        </>
       ) : (
         <>
           <h3>Toronto Stores</h3>

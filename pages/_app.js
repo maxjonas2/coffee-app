@@ -6,7 +6,7 @@ export const InterfaceContext = createContext();
 
 function App({ Component, pageProps }) {
   const container = useRef();
-
+  
   function closeDialogHandler(e) {
     if (Object.is(e.target, container.current)) {
       container.current.removeEventListener("click", closeDialog);
@@ -37,7 +37,7 @@ function App({ Component, pageProps }) {
           closeDialog={closeDialog}
         />
       )}
-      <BasicHead />
+      {/* <BasicHead /> */}
       <Component {...pageProps} />
     </InterfaceContext.Provider>
   );

@@ -1,0 +1,23 @@
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 300;
+
+  @media (max-resolution: 100dpi) {
+    font-weight: 400;
+  }
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.text-faded {
+  opacity: 0.6;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+}

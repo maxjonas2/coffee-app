@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* ----- DIALOGUE BOX ----- */
 .dialog-container {
   position: fixed;
   inset: 0;
@@ -18,21 +19,24 @@
   color: black;
 }
 
+/* ----- BUTTON ----- */
 .btn-normal {
   padding: 0.4rem 0.8rem;
-  background-color: #505050;
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  color: #e6e6e6;
+  background-color: #c8c8c8;
+  -webkit-box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.15), 0 4px 8px -2px rgba(0, 0, 0, 0.2);
+  color: rgba(50, 50, 50, 0.9);
   border: none;
   border-radius: 2px;
-  font-weight: bold;
   cursor: pointer;
+  font-weight: 500;
+  font-size: 0.84rem;
+  letter-spacing: 0.65px;
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn-normal:hover {
-  background-color: #5a5a5a;
+  background-color: gainsboro;
 }
 
 .btn-normal:active {
@@ -277,11 +281,48 @@ strong {
   opacity: 1;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 300;
+}
+
+@media (-webkit-max-device-pixel-ratio: 1.0416666666666667), (max-resolution: 100dpi) {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 400;
+  }
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.text-faded {
+  opacity: 0.6;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+}
+
 html,
 body {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Helvetica, sans-serif;
   background-color: #3e3e3e;
   color: #c8c8c8;
+  font-weight: 300;
+}
+
+@media (-webkit-max-device-pixel-ratio: 1.0416666666666667), (max-resolution: 100dpi) {
+  html,
+  body {
+    font-weight: 400;
+  }
 }
 
 * {
@@ -294,7 +335,7 @@ body {
 .app-container {
   margin: 0 auto;
   max-width: 1000px;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
 }
 
 .shop-grid {
@@ -310,44 +351,48 @@ body {
 .card {
   padding: 1.4rem;
   background-color: #2d2d2d;
-  -webkit-box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   cursor: pointer;
+}
+
+.shop-card {
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+
+.shop-card:hover {
+  -webkit-transform: translateY(-4px);
+          transform: translateY(-4px);
 }
 
 .card > img {
   border-radius: 6px;
 }
 
-.text-faded {
-  opacity: 0.5;
-  font-size: 1rem;
-  white-space: nowrap;
-  overflow: clip;
-  text-overflow: ellipsis;
-}
-
 .pop-on-hover {
   position: relative;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  z-index: 10;
 }
 
 .pop-on-hover::before {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: transparent;
-  -webkit-box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.6);
-          box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  border-radius: 6px;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  inset: -0px;
+  -webkit-box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  z-index: 0;
 }
 
-.pop-on-hover:hover::before {
-  opacity: 1;
+.pop-on-hover:hover {
+  -webkit-transform: translateY(-4px);
+          transform: translateY(-4px);
 }
 
 .image-container {
@@ -368,12 +413,9 @@ body {
 
 .card-title {
   text-transform: uppercase;
-  font-weight: 300;
   letter-spacing: 1px;
   font-size: 1rem;
-}
-
-.shop-card p {
-  font-weight: 300;
+  min-height: 2.5rem;
+  font-weight: 400;
 }
 /*# sourceMappingURL=globals.css.map */
