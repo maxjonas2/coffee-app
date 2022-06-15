@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function ShopCard({ data }) {
+export default function ShopCard({ data, placeholder = false }) {
+  if (placeholder === true) {
+    return <div className="card shop-card card-placeholder flow">
+      <div></div>
+    </div>;
+  }
+
   const { id, name, imgUrl, address } = data;
 
   return (

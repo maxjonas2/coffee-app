@@ -1,12 +1,19 @@
 import "../css/globals.css";
-import { createContext, useState, useEffect, useRef, forwardRef } from "react";
-import BasicHead from "../components/Head";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+  useReducer,
+} from "react";
+import StoreContextProvider from "../contexts/StoreContext";
 
 export const InterfaceContext = createContext();
 
 function App({ Component, pageProps }) {
   const container = useRef();
-  
+
   function closeDialogHandler(e) {
     if (Object.is(e.target, container.current)) {
       container.current.removeEventListener("click", closeDialog);
@@ -28,17 +35,38 @@ function App({ Component, pageProps }) {
     container.current.addEventListener("click", closeDialog);
   }, [dialog]);
 
+  function reducer(state, action) {
+    console.log("reduced called");
+    switch (action.name) {
+      case "SET_FECTHED_STORES":
+        return { ...state, fetchedShops: action.content };
+      case "SET_NEAR_SHOPS_LOADED":
+        return { ...state, nearShopsLoaded: action.content };
+      default:
+        throw new Error();
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, {
+    fecthedShops: [],
+    nearShopsLoaded: false,
+  });
+
+  const storeCtxValue = { state, dispatch };
+
   return (
     <InterfaceContext.Provider value={ctxValue}>
-      {dialog && (
-        <DialogContainer
-          ref={container}
-          content={dialog}
-          closeDialog={closeDialog}
-        />
-      )}
-      {/* <BasicHead /> */}
-      <Component {...pageProps} />
+      <StoreContextProvider value={storeCtxValue}>
+        {dialog && (
+          <DialogContainer
+            ref={container}
+            content={dialog}
+            closeDialog={closeDialog}
+          />
+        )}
+        {/* <BasicHead /> */}
+        <Component {...pageProps} />
+      </StoreContextProvider>
     </InterfaceContext.Provider>
   );
 }

@@ -41,6 +41,36 @@ body {
   cursor: pointer;
 }
 
+.card-placeholder {
+  min-height: 362px;
+  position: relative;
+  overflow: hidden;
+
+  > div {
+    height: 500px;
+    width: 150px;
+    position: absolute;
+    top: -100px;
+    left: 0;
+    transform: rotateZ(45deg) translate(300px);
+    background-color: rgba(white, 0.05);
+    filter: blur(40px);
+    animation: load 1s infinite linear;
+  }
+
+  @keyframes load {
+    0% {
+      transform: rotateZ(40deg) translate(300px);
+    }
+    50% {
+      transform: rotateZ(40deg) translate(-300px);
+    }
+    100% {
+      transform: rotateZ(40deg) translate(-300px);
+    }
+  }
+}
+
 .shop-card {
   transition: transform 0.3s ease;
 

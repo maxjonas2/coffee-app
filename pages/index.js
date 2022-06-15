@@ -2,11 +2,12 @@ import { useEffect, useState, useContext, Suspense } from "react";
 import { getData } from "../data/api";
 import { InterfaceContext } from "./_app";
 import { ShopCard, ProgressComponent, ExampleDialog } from "../components";
+import { StoreContext } from "../contexts/StoreContext";
 
 export async function getStaticProps(context) {
   return {
     props: {
-      coffeeShops: await getData("coffeeShops").then((response) =>
+      loadedCoffeeShops: await getData("coffeeShops").then((response) =>
         response.json()
       ),
     },
@@ -24,20 +25,20 @@ function parseFetchResults(data) {
   }));
 }
 
-export default function Home() {
+export default function Home({ loadedCoffeeShops }) {
   const [progressValue, setProgressValue] = useState(0);
-  const [coffeeShops, setCoffeShops] = useState([]);
-
   const { dialog, setDialog } = useContext(InterfaceContext);
+  // NOT IMPLEMENTED OR USED
 
-  useEffect(() => {
-    // getData("coffeeShops").then((data) => {
-    //   setListData(data);
-    // });
-    // This is not necessary because the data has been pre-generated on the server and passed to the component as a prop
+  const [isFindingNearShops, setIsFindingNearShops] = useState(false);
+  const { state, dispatch } = useContext(StoreContext);
 
+  const { nearShopsLoaded, fetchedShops } = state;
+
+  function findShops() {
+    setIsFindingNearShops(true);
     navigator.geolocation.getCurrentPosition(positionSuccesss, positionError);
-  }, []);
+  }
 
   function positionSuccesss({ coords }) {
     fetch(
@@ -51,8 +52,20 @@ export default function Home() {
       }
     )
       .then((response) => response.json())
-      .then((data) => setCoffeShops(parseFetchResults(data.results)))
-      .catch((error) => console.log(error));
+      .then((data) => {
+        // setCoffeShops(parseFetchResults(data.results));
+        dispatch({
+          name: "SET_FECTHED_STORES",
+          content: parseFetchResults(data.results),
+        });
+        dispatch({ name: "SET_NEAR_SHOPS_LOADED", content: true });
+        setIsFindingNearShops(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({ name: "SET_NEAR_SHOPS_LOADED", content: false });
+        setIsFindingNearShops(false);
+      });
   }
 
   function positionError(error) {
@@ -74,29 +87,53 @@ export default function Home() {
   return (
     <div className="app-container flow">
       <div className="flow">
-        <h1>Shop Finder</h1>
+        <h1 className="text-spaced">Shop Finder</h1>
         <p>Start browsing below</p>
       </div>
-      <div>
+      {/* <div>
         <button className="btn-normal" onClick={openDialog}>
           Open Dialog
         </button>
+      </div> */}
+      <div>
+        <button className="btn-normal" onClick={findShops}>
+          {isFindingNearShops === false ? "Find Shops Near Me" : "Loading..."}
+        </button>
       </div>
-      {coffeeShops.length === 0 ? (
-        <>
-          <List data={[1, 2, 3, 4, 5, 6]} render={item => <ShopCard placeholder={true}/>}
-        </>
+      {nearShopsLoaded === false ? (
+        <h3>Toronto Stores</h3>
       ) : (
-        <>
-          <h3>Toronto Stores</h3>
-          <div className="shop-grid">
-            <List
-              data={coffeeShops}
-              render={(item) => <ShopCard key={item.id} data={item} />}
-            />
-          </div>
-        </>
+        <h3>{isFindingNearShops ? "Loading" : "Near Me"}</h3>
       )}
+      <div className="shop-grid">
+        {/* Refactor into separate, reusable rendering function */}
+        {nearShopsLoaded === false && isFindingNearShops === false ? (
+          <>
+            <List
+              data={loadedCoffeeShops}
+              render={(item) => (
+                <ShopCard key={item.id} data={item} placeholder={false} />
+              )}
+            />
+          </>
+        ) : isFindingNearShops === true ? (
+          <>
+            <List
+              data={[1, 2, 3, 4, 5, 6]}
+              render={(item) => <ShopCard key={item} placeholder={true} />}
+            />
+          </>
+        ) : (
+          <>
+            <List
+              data={fetchedShops}
+              render={(item) => (
+                <ShopCard key={item.id} data={item} placeholder={false} />
+              )}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

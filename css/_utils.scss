@@ -1,113 +1,121 @@
 @mixin centered-items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin fill {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+:root {
+  --default-space: 1rem;
+  font-size: 16px;
+}
+
+// :is(section, div).content {
+//   margin-top: var(--default-space);
+// }
+
+.font-light {
+  font-weight: lighter !important;
+}
+
+.no-letter-spacing {
+  letter-spacing: 0px !important;
+}
+
+.flow > * + * {
+  margin-top: calc(var(--default-space) * 1) !important;
+}
+
+.flow-small > * + * {
+  margin-top: calc(var(--default-space) * 0.5) !important;
+}
+
+.flow-large > * + * {
+  margin-top: calc(var(--default-space) * 1.8) !important;
+}
+
+.centered-items {
+  @include centered-items;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+p {
+  // letter-spacing: 0.2px;
+  &.center {
+    text-align: center;
   }
-  
-  @mixin fill {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
+
+  &.faded {
+    color: rgba(black, 0.38);
   }
-  
-  :root {
-    --default-space: 1rem;
-    font-size: 16px;
+
+  &.note {
+    font-size: 0.8rem;
   }
-  
-  // :is(section, div).content {
-  //   margin-top: var(--default-space);
-  // }
-  
-  .font-light {
-    font-weight: lighter !important;
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+strong {
+  font-weight: 900;
+}
+
+.horizontal-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.horizontal-items.start {
+  justify-content: start;
+  gap: 2em;
+}
+
+.horizontal-items.centered {
+  justify-content: center;
+  gap: 2rem;
+}
+
+.horizontal-items.double-gap {
+  gap: 4rem;
+}
+
+.object-fit-left {
+  object-position: center left;
+}
+
+.object-fit-right {
+  object-position: center right;
+}
+
+.slide-on-view {
+  transform: translateY(24px);
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+  transition-delay: 0.4s;
+
+  &.in-view {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .no-letter-spacing {
-    letter-spacing: 0px !important;
-  }
-  
-  .flow > * + * {
-    margin-top: calc(var(--default-space) * 1) !important;
-  }
-  
-  .flow-small > * + * {
-    margin-top: calc(var(--default-space) * 0.5) !important;
-  }
-  
-  .centered-items {
-    @include centered-items;
-  }
-  
-  p {
-    // letter-spacing: 0.2px;
-    &.center {
-      text-align: center;
-    }
-  
-    &.faded {
-      color: rgba(black, 0.38);
-    }
-  
-    &.note {
-      font-size: 0.8rem;
-    }
-  }
-  
-  .upper {
-    text-transform: uppercase;
-  }
-  
-  img {
-    display: block;
-    max-width: 100%;
-  }
-  
-  ul {
-    list-style-type: none;
-  }
-  
-  strong {
-    font-weight: 900;
-  }
-  
-  .horizontal-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .horizontal-items.start {
-    justify-content: start;
-    gap: 2em;
-  }
-  
-  .horizontal-items.centered {
-    justify-content: center;
-    gap: 2rem;
-  }
-  
-  .horizontal-items.double-gap {
-    gap: 4rem;
-  }
-  
-  .object-fit-left {
-    object-position: center left;
-  }
-  
-  .object-fit-right {
-    object-position: center right;
-  }
-  
-  .slide-on-view {
-    transform: translateY(24px);
-    opacity: 0;
-    transition: transform 1s ease, opacity 1s ease;
-    transition-delay: 0.4s;
-  
-    &.in-view {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+}

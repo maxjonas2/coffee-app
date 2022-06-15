@@ -157,6 +157,18 @@ progress:not([max])[value="1"]::before, progress[max="100"][value="100"]::before
   }
 }
 
+/* ----- COFFEE SHOP PAGE COMPONENTS ----- */
+.cafe-page-article {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.card-rounded {
+  border-radius: 12px;
+}
+
 :root {
   --default-space: 1rem;
   font-size: 16px;
@@ -178,6 +190,10 @@ progress:not([max])[value="1"]::before, progress[max="100"][value="100"]::before
   margin-top: calc(var(--default-space) * 0.5) !important;
 }
 
+.flow-large > * + * {
+  margin-top: calc(var(--default-space) * 1.8) !important;
+}
+
 .centered-items {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -188,6 +204,10 @@ progress:not([max])[value="1"]::before, progress[max="100"][value="100"]::before
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.centered-text {
+  text-align: center;
 }
 
 p.center {
@@ -299,7 +319,10 @@ h4 {
 
 h1 {
   text-transform: uppercase;
-  letter-spacing: 3px;
+}
+
+.text-spaced {
+  letter-spacing: 2px;
 }
 
 .text-faded {
@@ -353,6 +376,57 @@ body {
   background-color: #2d2d2d;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.card-placeholder {
+  min-height: 362px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-placeholder > div {
+  height: 500px;
+  width: 150px;
+  position: absolute;
+  top: -100px;
+  left: 0;
+  -webkit-transform: rotateZ(45deg) translate(300px);
+          transform: rotateZ(45deg) translate(300px);
+  background-color: rgba(255, 255, 255, 0.05);
+  -webkit-filter: blur(40px);
+          filter: blur(40px);
+  -webkit-animation: load 1s infinite linear;
+          animation: load 1s infinite linear;
+}
+
+@-webkit-keyframes load {
+  0% {
+    -webkit-transform: rotateZ(40deg) translate(300px);
+            transform: rotateZ(40deg) translate(300px);
+  }
+  50% {
+    -webkit-transform: rotateZ(40deg) translate(-300px);
+            transform: rotateZ(40deg) translate(-300px);
+  }
+  100% {
+    -webkit-transform: rotateZ(40deg) translate(-300px);
+            transform: rotateZ(40deg) translate(-300px);
+  }
+}
+
+@keyframes load {
+  0% {
+    -webkit-transform: rotateZ(40deg) translate(300px);
+            transform: rotateZ(40deg) translate(300px);
+  }
+  50% {
+    -webkit-transform: rotateZ(40deg) translate(-300px);
+            transform: rotateZ(40deg) translate(-300px);
+  }
+  100% {
+    -webkit-transform: rotateZ(40deg) translate(-300px);
+            transform: rotateZ(40deg) translate(-300px);
+  }
 }
 
 .shop-card {

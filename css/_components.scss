@@ -141,3 +141,14 @@ progress {
     background-position: left;
   }
 }
+
+/* ----- COFFEE SHOP PAGE COMPONENTS ----- */
+
+.cafe-page-article {
+  display: flex;
+  gap: 1rem;
+}
+
+.card-rounded {
+  border-radius: 12px;
+}

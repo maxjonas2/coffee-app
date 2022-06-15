@@ -1,11 +1,16 @@
 const http = require("http");
 const express = require("express");
-const path = require("path");
 const coffeeStores = require("./data/coffee-stores");
-const axios = require("axios").default;
 const app = express();
 
+const PORT = 8000;
+
 app.use(express.static("public"));
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.get("/api/shops", (req, res) => {
   res.header("Cache-Control", "max-age=3600");
@@ -19,13 +24,16 @@ app.get("/api/shops/:id", (req, res) => {
       .status(500)
       .json({ status: "error", message: "No valid ID provided" });
   }
-  res.status(200).json(coffeeStores.find((item) => item.id == params.id));
+  const coffeeStoreData = coffeeStores.find((item) => item.id == params.id);
+  if (coffeeStoreData) {
+    res.status(200).json(coffeeStoreData);
+  } else {
+    res.status(404).json({ error: "Resource not found" });
+  }
 });
 
-
-
-http.createServer(app).listen("8000", "localhost", () => {
-  console.log("listening");
+http.createServer(app).listen(PORT, "localhost", () => {
+  console.log("listening on port " + PORT);
 });
 
 // **REMINDER: REFACTOR THIS AS A GOOGLE CLOUD FUNCTION
