@@ -1,26 +1,6 @@
-import { getData } from "../../data/api";
+import { getCachedData, getData } from "../../data/api";
 import { useRouter } from "next/router";
-
-function fetchCoffeeShops() {
-  return getData("coffeeShops").then((data) => data.json());
-}
-
-async function fetchCoffeeShop(id) {
-  const options = {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      Authorization: process.env.FOURSQUARE_API_KEY,
-    },
-  };
-
-  const response = await fetch(
-    "https://api.foursquare.com/v3/places/" + id.toString(),
-    options
-  );
-
-  return response;
-}
+import {fetchCoffeeShop} from "../../utils";
 
 /* getStaticPaths Function Schame
  * return {paths: [{params: {...params}}], fallback: true | false}
@@ -29,7 +9,7 @@ async function fetchCoffeeShop(id) {
 
 export async function getStaticPaths() {
   return {
-    paths: (await fetchCoffeeShops()).map((item) => ({
+    paths: getCachedData("data").map((item) => ({
       params: { id: item.id.toString() },
     })),
     fallback: true,
@@ -58,7 +38,6 @@ export default function Shop(props) {
   if (router.isFallback) {
     return <div>Loading</div>;
   }
-  console.log(props);
   if (props.status == 400) {
     return <div>Does not exist! 404</div>;
   } else {
@@ -93,7 +72,6 @@ export default function Shop(props) {
   }
 
   // if (!props) {
-  //   console.log("no props!");
   //   setCurrentShop({ id: 1, name: "teste", address: "whatever" });
   // } else {
   //   setCurrentShop(props);

@@ -2,6 +2,8 @@ const http = require("http");
 const express = require("express");
 const coffeeStores = require("./data/coffee-stores");
 const app = express();
+const cluster = require('cluster');
+const { runIntensiveProcess } = require("./utils");
 
 const PORT = 8000;
 
@@ -31,6 +33,8 @@ app.get("/api/shops/:id", (req, res) => {
     res.status(404).json({ error: "Resource not found" });
   }
 });
+
+app.get("/api/runIntensiveProcess", runIntensiveProcess);
 
 http.createServer(app).listen(PORT, "localhost", () => {
   console.log("listening on port " + PORT);

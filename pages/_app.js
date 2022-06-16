@@ -36,7 +36,6 @@ function App({ Component, pageProps }) {
   }, [dialog]);
 
   function reducer(state, action) {
-    console.log("reduced called");
     switch (action.name) {
       case "SET_FECTHED_STORES":
         return { ...state, fetchedShops: action.content };

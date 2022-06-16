@@ -1,16 +1,12 @@
 import { useEffect, useState, useContext, Suspense } from "react";
-import { getData } from "../data/api";
+import { getCachedData } from "../data/api";
 import { InterfaceContext } from "./_app";
 import { ShopCard, ProgressComponent, ExampleDialog } from "../components";
 import { StoreContext } from "../contexts/StoreContext";
 
 export async function getStaticProps(context) {
   return {
-    props: {
-      loadedCoffeeShops: await getData("coffeeShops").then((response) =>
-        response.json()
-      ),
-    },
+    props: { loadedCoffeeShops: getCachedData("data") },
   };
 }
 // This can be implemented as a stream (WritableStream Interface). Hence the use of
