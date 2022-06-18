@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export default function fsqHandler(req, res) {
   const { lat, long } = req.query;
   fetch(

@@ -1,7 +1,7 @@
 const gulp = require("gulp");
 const autoprefixer = require("gulp-autoprefixer");
 
-exports.default = () => {
+exports.default = async () => {
   gulp
     .src("./css/globals.css")
     .pipe(autoprefixer({ cascade: false }))

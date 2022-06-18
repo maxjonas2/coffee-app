@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, Suspense } from "react";
+import { useState, useContext } from "react";
 import { getCachedData } from "../data/api";
 import { InterfaceContext } from "./_app";
 import { ShopCard, ProgressComponent, ExampleDialog } from "../components";
