@@ -41,6 +41,8 @@ function App({ Component, pageProps }) {
         return { ...state, fetchedShops: action.content };
       case "SET_NEAR_SHOPS_LOADED":
         return { ...state, nearShopsLoaded: action.content };
+      case "SET_IS_FINDING_NEAR_SHOPS":
+        return { ...state, isFindingNearShops: action.content };
       default:
         throw new Error();
     }
@@ -49,6 +51,7 @@ function App({ Component, pageProps }) {
   const [state, dispatch] = useReducer(reducer, {
     fecthedShops: [],
     nearShopsLoaded: false,
+    isFindingNearShops: false
   });
 
   const storeCtxValue = { state, dispatch };

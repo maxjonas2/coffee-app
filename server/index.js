@@ -2,7 +2,7 @@ const http = require("http");
 const express = require("express");
 const coffeeStores = require("./data/coffee-stores");
 const app = express();
-const cluster = require('cluster');
+const cluster = require("cluster");
 const { runIntensiveProcess } = require("./utils");
 
 const PORT = 8000;
@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/api/shops", (req, res) => {
-  res.header("Cache-Control", "max-age=3600");
+  res.setHeader("Cache-Control", "max-age=3600");
   res.status(200).json(coffeeStores);
 });
 
