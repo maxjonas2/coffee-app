@@ -3,9 +3,11 @@ import Image from "next/image";
 
 export default function ShopCard({ data, placeholder = false }) {
   if (placeholder === true) {
-    return <div className="card shop-card card-placeholder flow">
-      <div></div>
-    </div>;
+    return (
+      <div className="card shop-card card-placeholder flow">
+        <div></div>
+      </div>
+    );
   }
 
   const { id, name, imgUrl, address } = data;
@@ -17,11 +19,17 @@ export default function ShopCard({ data, placeholder = false }) {
         {/* <p className="text-faded">{neighborhood}</p> */}
         <p className="text-faded">{address}</p>
         <div className="image-container">
-          <img
+          {/* <img
             src={imgUrl}
             height="220"
             alt="Image showing coffee"
             title="Image showing café"
+          /> */}
+          <Image
+            src={imgUrl}
+            layout="fill"
+            alt="Image showing coffee"
+            title="Image showing coffee"
           />
         </div>
       </div>

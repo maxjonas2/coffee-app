@@ -81,4 +81,6 @@ const DialogContainer = forwardRef(({ content, closeDialog }, ref) => {
   );
 });
 
+DialogContainer.displayName = "DialogContainer";
+
 export default App;

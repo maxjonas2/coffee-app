@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ProgressComponent({ setDialog }) {
   const [value, setValue] = useState(0);
 
-  let timerRef;
+  const timerRef = useRef(0);
 
   useEffect(() => {
     if (value >= 100) {
       setDialog(null);
-      return () => clearTimeout(timerRef);
+      return () => clearTimeout(timerRef.current);
     }
 
-    timerRef = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setValue((value) => value + 5);
     }, 1000);
 
-    return () => clearTimeout(timerRef);
+    return () => clearTimeout(timerRef.current);
   }, [value]);
 
   return (

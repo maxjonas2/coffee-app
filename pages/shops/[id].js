@@ -1,6 +1,7 @@
 import { getCachedData, getData } from "../../data/api";
 import { useRouter } from "next/router";
-import {fetchCoffeeShop} from "../../utils";
+import { fetchCoffeeShop } from "../../utils";
+import Image from "next/image";
 
 /* getStaticPaths Function Schame
  * return {paths: [{params: {...params}}], fallback: true | false}
